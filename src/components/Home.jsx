@@ -74,4 +74,5 @@ margin: 25px 0;
 }
 `;
 
+
 export default Home
