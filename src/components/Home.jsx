@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-// import Leftside from './Leftside';
-// import Rightside from './Rightside';
+import Leftside from './Leftside';
+import Rightside from './Rightside';
 import Main from './Main';
 
 const Home = (props) => {
   return (
-  <Container>
+  <Container> 
     <Section>
         <h5><a>Hiring immediately? - </a></h5>
         <p>Find talent in record time with Upwork and keep business moving.</p>
