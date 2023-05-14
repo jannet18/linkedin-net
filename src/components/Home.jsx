@@ -3,10 +3,20 @@ import styled from 'styled-components';
 import Leftside from './Leftside';
 import Rightside from './Rightside';
 import Main from './Main';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Home = (props) => {
+    const navigate = useNavigate();
+    
+    const navigateToSignOut = () => {
+        navigate("/");
+    }
   return (
-  <Container> 
+    <Container>
+          {
+             !props.user && navigateToSignOut()
+          }
     <Section>
         <h5><a>Hiring immediately? - </a></h5>
         <p>Find talent in record time with Upwork and keep business moving.</p>
@@ -74,5 +84,9 @@ margin: 25px 0;
 }
 `;
 
-
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        user: state.userState.user,
+    }
+}
+export default connect(mapStateToProps)(Home);

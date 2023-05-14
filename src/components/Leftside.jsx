@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const Leftside = (props) => {
   return (
@@ -9,7 +10,7 @@ const Leftside = (props) => {
           <CardBackground />
           <a>
             <Photo />
-            <Link>Welcome</Link>
+            <Link>Welcome, {props.user ? props.user.displayName : "there" }!</Link>
           </a>
           <a>
             <AddPhotoText>
@@ -200,4 +201,10 @@ a{
 }
 `;
 
-export default Leftside
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  }
+}
+
+export default connect(mapStateToProps)(Leftside);

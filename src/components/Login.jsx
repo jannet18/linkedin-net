@@ -2,11 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { signInAPI } from '../actions';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = (props) => {
+    const navigate = useNavigate();
+
+    const navigateToHome = () => {
+        navigate("/home");
+    }
   return (
-    <Container>
+      <Container>
+          {
+              props.user && navigateToHome()
+          }
        <Nav>
         <a href='/'>
             <img src="/images/login-logo.svg" alt="" />
@@ -175,7 +184,9 @@ color: rgba(0, 0, 0, 0.6);
 
 `;
 const mapStateToProps = (state) => {
-    return {}; 
+    return {
+        user: state.userState.user,
+    }; 
 }
 
 const mapDispatchToProps = (dispatch) => ({
