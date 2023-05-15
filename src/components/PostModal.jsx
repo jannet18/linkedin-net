@@ -1,45 +1,66 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import styled from 'styled-components';
 
 
 const PostModal = (props) => {
+    const [editortText, setEditorText] = useState('');
+
+    const reset = (e) => {
+        setEditorText('');
+        props.handleClick(e);
+    }
     return (
-        <Container>
-            <Content>
-                <Header>
-                    <h2>Create a post</h2>
-                    <button>
-                        <img src="/images/close-icon.png " alt="" />
-                    </button>
-                </Header>
-                <SharedContent>
-                    <UserInfo>
-                        <img src="/images/user.svg" alt="" />
-                        <span>Name</span>
-                    </UserInfo>
-                </SharedContent>
-                <SharedCreation>
-                    <AttachAssets>
-                        <AssetButton>
-                            <img src="/images/photo-camera.svg" alt="" />
-                        </AssetButton>
-                        <AssetButton>
-                            <img src="/images/youtube.svg" alt="" />
-                        </AssetButton>
-                    </AttachAssets>
-                    <ShareComment>
-                        <AssetButton>
-                            <img src="/images/chat-boxes.svg" alt="" />
-                            Anyone
-                            {/* <img src="/imags/comment.gif" alt="" /> */}
-                        </AssetButton>
-                    </ShareComment>
-                    <PostButton>
-                        post
-                    </PostButton>
-                </SharedCreation>
-            </Content>
-        </Container>
+        <>
+            { props.showModal === 'open' &&
+                <Container>
+                    <Content>
+                        <Header>
+                            <h2>Create a post</h2>
+                            <button onClick={(event) => reset(event)}>
+                                <img src="/images/close-icon.png " alt="" />
+                            </button>
+                        </Header>
+                        <SharedContent>
+                            <UserInfo>
+                                <img src="/images/user.svg" alt="" />
+                                <span>Name</span>
+                            </UserInfo>
+                            <Editor>
+                                <textarea name="" id="" cols="30" rows="10"
+                                    value={editortText}
+                                    onChange={(e) => setEditorText(e.target.value)}
+                                    placeholder='Share your thoughts'
+                                    autoFocus={true}
+                    
+                                >
+                                </textarea>
+                            </Editor>
+                        </SharedContent>
+                        <SharedCreation>
+                            <AttachAssets>
+                                <AssetButton>
+                                    <img src="/images/photo-camera.svg" alt="" />
+                                </AssetButton>
+                                <AssetButton>
+                                    <img src="/images/youtube.svg" alt="" />
+                                </AssetButton>
+                            </AttachAssets>
+                            <ShareComment>
+                                <AssetButton>
+                                    <img src="/images/chat-boxes.svg" alt="" />
+                                    Anyone
+                                    {/* <img src="/imags/comment.gif" alt="" /> */}
+                                </AssetButton>
+                            </ShareComment>
+                            <PostButton>
+                                post
+                            </PostButton>
+                        </SharedCreation>
+                    </Content>
+                </Container>
+            }
+        </>
+
     )
 }
 const Container = styled.div`
@@ -83,7 +104,7 @@ button{
     width: 45px;
     min-width: auto;
     color: rgba(0, 0, 0, 0.15);
-    img {
+    img, svg {
         width: 30px;
         height: 30px;
         pointer-events: none;
@@ -167,6 +188,21 @@ background: #0a66c2;
 color: white;
 &:hover{
     background: #004182;
+}
+`;
+
+const Editor = styled.div`
+padding: 12px 24px;
+textarea{
+    width: 100%;
+    min-height: 100px;
+    resize: none;
+}
+input {
+    width: 100%;
+    height: 35px;
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 `;
 
