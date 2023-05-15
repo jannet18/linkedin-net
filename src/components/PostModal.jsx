@@ -1,13 +1,26 @@
 import React,{ useState } from 'react';
 import styled from 'styled-components';
+import ReactPlayer from 'react-player';
 
 
 const PostModal = (props) => {
     const [editortText, setEditorText] = useState('');
+    const [shareImage, setShareImage] = useState('');
+    const [videoLink, setVideoLink] = useState('');
 
     const reset = (e) => {
         setEditorText('');
         props.handleClick(e);
+    }
+
+    const handleChange = (e) => {
+        const image = e.target.files[0];
+        if (image === '' || image === undefined) {
+            alert(`not an image, the file is a ${typeof image}`)
+            return;
+        } 
+        setShareImage(image);
+
     }
     return (
         <>
@@ -32,8 +45,34 @@ const PostModal = (props) => {
                                     placeholder='Share your thoughts'
                                     autoFocus={true}
                     
-                                >
-                                </textarea>
+                                />
+                                <UploadImage>
+                                    <input
+                                        type="file"
+                                        accept='image/gif, image/jpeg, image/png'
+                                        name='image'
+                                        id='file'
+                                        style={{ display: 'none' }}
+                                        onChange={handleChange}
+                                    />
+                                       <p>
+                                    <label htmlFor="file" style={{}}>
+                                        Upload an image to share
+                                    </label>
+                                    </p>
+                                    {shareImage && <img src={URL.createObjectURL(shareImage)} alt="" />}
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder='Please input a video link'
+                                            value={videoLink}
+                                            onChange={(e) => setVideoLink(e.target.value)}  
+                                        />
+                                        {videoLink && <ReactPlayer width={'100%'} url={videoLink} />}
+                                    </>
+                                
+                                </UploadImage>
+                             
                             </Editor>
                         </SharedContent>
                         <SharedCreation>
@@ -52,8 +91,8 @@ const PostModal = (props) => {
                                     {/* <img src="/imags/comment.gif" alt="" /> */}
                                 </AssetButton>
                             </ShareComment>
-                            <PostButton>
-                                post
+                            <PostButton disabled={!editortText ? true : false}>
+                                Post
                             </PostButton>
                         </SharedCreation>
                     </Content>
@@ -72,6 +111,7 @@ bottom: 0;
 z-index: 9999;
 color: black;
 background-color: rgba(0, 0, 0, 0.8);
+animation: fadeIn 0.3s;
 `;
 
 const Content = styled.div`
@@ -184,10 +224,10 @@ min-width: 60px;
 border-radius: 20px;
 paddding-left: 16px;
 padding-right: 8px;
-background: #0a66c2;
-color: white;
+background: ${(props) => (props.disabled ? 'rgba(0, 0, 0, 0.15)' : '#0a66c2')};
+color: ${(props) => (props.disabled ? 'rgba(1, 1, 1, 0.2)' : 'white')};
 &:hover{
-    background: #004182;
+    background: ${(props) => (props.disabled ? 'rgba(0, 0, 0, 0.08)' : '#004182')};
 }
 `;
 
@@ -206,4 +246,10 @@ input {
 }
 `;
 
+const UploadImage = styled.div`
+text-align: center;
+img {
+    width: 100%; 
+}
+`;
 export default PostModal
