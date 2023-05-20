@@ -67,7 +67,7 @@ export function PostArticleAPI(payload) {
         async () => {
           await getDownloadURL(uploadTask.snapshot.ref).then(
             async (downLoadURL) => {
-              await setDoc("articles", {
+              await addDoc(docRef, {
                 user: {
                   description: payload.user.email,
                   title: payload.displayName,
