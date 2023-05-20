@@ -1,4 +1,5 @@
 About
+
 Re-designed Linked-in web application using React, React-redux, Firebase, styled components with full responsiveness by including core funtionalities like login, upload posts that could include images and video links.
 
 Live Website Link:
@@ -9,11 +10,11 @@ Specifications
 - Functionalities: Login with firebase google popup, posting images, videos and plain text.
 - Fully responsive design. Suites perfectly all size devices.
 
-**_ Preview _**
+Preview
 
-**_ Mobile View _**
+Mobile View
 
-**_ Tech used _**
+Tech used
 
 - React
 - React-redux
@@ -25,4 +26,4 @@ Specifications
   - storage
   - Hosting
 
-**_ Pre-quisites _**
+Pre-quisites
