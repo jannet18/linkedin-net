@@ -4,7 +4,7 @@ import { db } from "../firebase/Config";
 import { SET_USER } from "./actionType";
 // import { connect } from "react-redux";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc } from "firebase/firestore";
 
 export const setUser = (payload) => ({
   type: SET_USER,
@@ -47,11 +47,12 @@ export function signOutAPI() {
 export function PostArticleAPI(payload) {
   return (dispatch) => {
     if (payload.image !== "") {
-      const docRef = collection(db, "articles/");
+      const docRef = collection(db, "articles");
       const storageRef = ref(storage, `images/${payload.image.name}`);
       const uploadTask = uploadBytesResumable(storageRef, payload.image);
-      // ref(storage, `images/${payload.image.name}`)
-      // storageRef?.put(payload?.image);
+      // .push(storageRef, payload.image);
+      // storageRef?.push(payload?.image);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -66,8 +67,8 @@ export function PostArticleAPI(payload) {
         async () => {
           await getDownloadURL(uploadTask.snapshot.ref).then(
             async (downLoadURL) => {
-              await addDoc(collection(db, "articles"), {
-                actor: {
+              await setDoc("articles", {
+                user: {
                   description: payload.user.email,
                   title: payload.displayName,
                   date: payload.timestamp,
@@ -78,12 +79,25 @@ export function PostArticleAPI(payload) {
                 comments: 0,
                 description: payload.description,
               });
-
               console.log(downLoadURL);
-            }
+            },
+            console.log(docRef)
           );
         }
       );
+    } else if (payload.video) {
+      setDoc(collection(db, "articles"), {
+        user: {
+          description: payload.user.email,
+          title: payload.displayName,
+          date: payload.timestamp,
+          image: payload.user.photoURL,
+        },
+        video: payload.video,
+        sharedImg: "",
+        comments: 0,
+        description: payload.description,
+      });
     }
   };
 }

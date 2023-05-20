@@ -31,7 +31,6 @@ const PostModal = (props) => {
       return;
     }
     const payload = {
-      //   title: user.displayName,
       image: shareImage,
       video: videoLink,
       user: props.user,
